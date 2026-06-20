@@ -3,10 +3,18 @@
 ## Overview
 LinkDrop is an AirDrop-style app. It sends files between devices on the same Wi-Fi network. No cloud, no login — direct device-to-device transfer.
 
+## Tech Stack
+- **App framework:** Flutter (one codebase for Android, iOS, Windows, macOS, Linux)
+- **Language:** Dart (used for both the app UI and the networking engine)
+- **Discovery:** mDNS/Bonjour, UDP broadcast as fallback
+- **Transfer:** TCP sockets, file-by-file (not zipped), multiple files/folders supported per send
+- **Security:** TLS over the TCP connection, plus a device check before transfer
+- **Storage:** local only — no database, no cloud, no backend server
+
 ## Modules
-1. **GUI Layer** — device list, send/receive buttons, progress bars, accept/reject popup
+1. **GUI Layer (Flutter)** — device list, send/receive buttons, progress bars, accept/reject popup
 2. **Discovery Service** — finds other devices on the local network (mDNS/Bonjour or UDP broadcast)
-3. **Transfer Engine** — sends/receives file data over TCP
+3. **Transfer Engine** — sends/receives file data over TCP, one file at a time, queues multiple files/folders
 4. **Security Module** — wraps the connection in TLS, verifies the other device before sending
 5. **Network Layer** — raw networking underneath, with two modes:
    - **Private mode**: Wi-Fi Direct or app-created hotspot (Android, Windows, Linux only)
@@ -30,6 +38,4 @@ GUI Layer → Discovery Service → Network Layer
 ```
 
 ## Open Items (not decided yet)
-- GUI framework: Electron vs Qt vs Flutter (Flutter recommended — phones are in scope)
-- Programming language for discovery + transfer engine
-- How folders are sent: zip the whole folder, or send files one by one
+_(none — all core decisions made)_
