@@ -1,5 +1,4 @@
 # Decisions
-# Decisions
 
 ## Decision 001
 Date: 2026-06-20
@@ -36,9 +35,16 @@ Decision: Build as a command-line tool first (Phases 1-2: discovery + basic tran
 Reason: Easier to debug discovery and transfer without GUI complexity on top
 Consequences: GUI work is delayed until Phase 4
 
+## Decision 006
+Date: 2026-06-20
+Topic: Network connection mode (private Wi-Fi vs router Wi-Fi)
+Decision: Try to set up a private device-to-device Wi-Fi connection first (Wi-Fi Direct or app hotspot). If that's not possible on the platform or fails, fall back automatically to the existing Wi-Fi router/LAN. The pick happens automatically — no user action needed
+Reason: Gives the best possible speed where supported (Android, Windows, Linux), but still works everywhere, including iOS and macOS, where private Wi-Fi connections aren't allowed for third-party apps
+Consequences: Two network code paths to build and test instead of one. Needs a check at connect-time to decide which mode to use. iOS/macOS will always use router Wi-Fi, never private mode
+
 ---
 
 ## Pending Decisions (need to be made before coding starts)
-- GUI framework: Electron vs Qt vs Flutter
+- GUI framework: Electron vs Qt vs Flutter (Flutter recommended since phones are in scope — Electron has no phone support)
 - Programming language for discovery + transfer engine
 - Folder transfer approach: zip vs file-by-file
